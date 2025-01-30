@@ -81,9 +81,9 @@ export default function ClientPage({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="10">10개씩 보기</SelectItem>
                     <SelectItem value="30">30개씩 보기</SelectItem>
-                    <SelectItem value="50">50개씩 보기</SelectItem>
+                    <SelectItem value="60">60개씩 보기</SelectItem>
+                    <SelectItem value="90">90개씩 보기</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>

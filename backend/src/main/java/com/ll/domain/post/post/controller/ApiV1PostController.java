@@ -73,7 +73,7 @@ public class ApiV1PostController {
             @RequestParam(defaultValue = "title") PostSearchKeywordTypeV1 searchKeywordType,
             @RequestParam(defaultValue = "") String searchKeyword,
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int pageSize
+            @RequestParam(defaultValue = "30") int pageSize
     ) {
         return new PageDto<>(
                 postService.findByListedPaged(true, searchKeywordType, searchKeyword, page, pageSize)
@@ -88,7 +88,7 @@ public class ApiV1PostController {
             @RequestParam(defaultValue = "title") PostSearchKeywordTypeV1 searchKeywordType,
             @RequestParam(defaultValue = "") String searchKeyword,
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int pageSize
+            @RequestParam(defaultValue = "30") int pageSize
     ) {
         Member author = rq.getActor();
 
