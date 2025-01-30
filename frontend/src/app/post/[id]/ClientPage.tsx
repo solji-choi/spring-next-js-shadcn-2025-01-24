@@ -70,12 +70,11 @@ export default function ClientPage({
                   <Link href={`/post/${post.id}/edit`}>수정</Link>
                 </Button>
               )}
-              {isAdmin ||
-                (loginMember.id === post.authorId && (
-                  <Button asChild variant="outline">
-                    <Link href={`/post/${post.id}/delete`}>삭제</Link>
-                  </Button>
-                ))}
+              {(isAdmin || loginMember.id === post.authorId) && (
+                <Button asChild variant="outline">
+                  <Link href={`/post/${post.id}/delete`}>삭제</Link>
+                </Button>
+              )}
             </div>
           </div>
         </CardHeader>
