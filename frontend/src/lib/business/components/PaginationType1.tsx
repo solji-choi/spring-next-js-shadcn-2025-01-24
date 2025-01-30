@@ -10,15 +10,15 @@ interface UsePaginationProps {
   baseQueryString: string;
   totalPages: number;
   currentPageNumber: number;
+  paginationArmSize: number;
 }
 
 function usePagination({
   baseQueryString,
   totalPages,
   currentPageNumber,
+  paginationArmSize,
 }: UsePaginationProps) {
-  const paginationArmSize = 1;
-
   const pageButtonUrl = (pageNumber: number) =>
     `?page=${pageNumber}&${baseQueryString}`;
 
@@ -56,6 +56,7 @@ interface PaginationProps {
   baseQueryString: string;
   totalPages: number;
   currentPageNumber: number;
+  paginationArmSize?: number;
 }
 
 export default function PaginationType1({
@@ -63,6 +64,7 @@ export default function PaginationType1({
   baseQueryString,
   totalPages,
   currentPageNumber,
+  paginationArmSize = 1,
 }: PaginationProps) {
   const {
     pageButtonUrl,
@@ -73,6 +75,7 @@ export default function PaginationType1({
     baseQueryString,
     totalPages,
     currentPageNumber,
+    paginationArmSize,
   });
 
   return (
