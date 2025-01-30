@@ -8,7 +8,7 @@ export function parseAccessToken(accessToken: string | undefined) {
     try {
       const tokenParts = accessToken.split(".");
       accessTokenPayload = JSON.parse(
-        Buffer.from(tokenParts[1], "base64").toString()
+        Buffer.from(tokenParts[1], "base64").toString(),
       );
       const expTimestamp = accessTokenPayload.exp * 1000;
       isAccessTokenExpired = Date.now() > expTimestamp;
@@ -20,7 +20,8 @@ export function parseAccessToken(accessToken: string | undefined) {
   const isLogin =
     typeof accessTokenPayload === "object" && accessTokenPayload !== null;
 
-  const isAdmin = isLogin && accessTokenPayload.authorities.includes("ROLE_ADMIN");
+  const isAdmin =
+    isLogin && accessTokenPayload.authorities.includes("ROLE_ADMIN");
 
   const me: components["schemas"]["MemberDto"] | null = isLogin
     ? {
@@ -28,12 +29,14 @@ export function parseAccessToken(accessToken: string | undefined) {
         createDate: "",
         modifyDate: "",
         nickname: accessTokenPayload.nickname,
+        profileImgUrl: "",
       }
     : {
         id: 0,
         createDate: "",
         modifyDate: "",
         nickname: "",
+        profileImgUrl: "",
       };
 
   return { isLogin, isAdmin, isAccessTokenExpired, accessTokenPayload, me };

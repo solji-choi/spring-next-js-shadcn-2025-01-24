@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+
 import client from "@/lib/backend/client";
 
 import ClientPage from "./ClientPage";
@@ -28,9 +30,12 @@ export default async function Page({
         page,
       },
     },
+    headers: {
+      cookie: (await cookies()).toString(),
+    },
   });
 
-  const responseBody = response.data!!;
+  const itemPage = response.data!;
 
   return (
     <>
@@ -39,7 +44,7 @@ export default async function Page({
         searchKeywordType={searchKeywordType}
         page={page}
         pageSize={pageSize}
-        responseBody={responseBody}
+        itemPage={itemPage}
       />
     </>
   );

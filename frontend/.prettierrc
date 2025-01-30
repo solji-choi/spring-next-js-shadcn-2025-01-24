@@ -11,6 +11,7 @@
     "^lucide-react$",
     "^[./]"
   ],
+  "importOrderParserPlugins": ["typescript", "jsx"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }
