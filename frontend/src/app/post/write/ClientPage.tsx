@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import client from "@/lib/backend/client";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -33,6 +34,8 @@ const writeFormSchema = z.object({
     .min(1, "내용을 입력해주세요.")
     .min(2, "내용은 2자 이상이어야 합니다.")
     .max(10_000_000, "내용은 1,000만자 이하여야 합니다."),
+  published: z.boolean().optional(),
+  listed: z.boolean().optional(),
 });
 
 type WriteFormInputs = z.infer<typeof writeFormSchema>;
@@ -46,6 +49,8 @@ export default function ClientPage() {
     defaultValues: {
       title: "",
       content: "",
+      published: false,
+      listed: false,
     },
   });
 
@@ -54,6 +59,8 @@ export default function ClientPage() {
       body: {
         title: data.title,
         content: data.content,
+        published: data.published,
+        listed: data.listed,
       },
     });
 
@@ -100,6 +107,26 @@ export default function ClientPage() {
               </FormItem>
             )}
           />
+          <div className="flex gap-4">
+            <label className="flex items-center space-x-2 cursor-pointer">
+              <Checkbox
+                checked={form.watch("published")}
+                onCheckedChange={(checked) =>
+                  form.setValue("published", checked === true)
+                }
+              />
+              <span className="text-sm font-medium leading-none">공개</span>
+            </label>
+            <label className="flex items-center space-x-2 cursor-pointer">
+              <Checkbox
+                checked={form.watch("listed")}
+                onCheckedChange={(checked) =>
+                  form.setValue("listed", checked === true)
+                }
+              />
+              <span className="text-sm font-medium leading-none">검색</span>
+            </label>
+          </div>
           <FormField
             control={form.control}
             name="content"
@@ -109,7 +136,7 @@ export default function ClientPage() {
                 <FormControl>
                   <Textarea
                     {...field}
-                    className="h-[calc(100dvh-350px)] min-h-[300px]"
+                    className="h-[calc(100dvh-380px)] min-h-[300px]"
                     placeholder="내용을 입력해주세요"
                   />
                 </FormControl>
