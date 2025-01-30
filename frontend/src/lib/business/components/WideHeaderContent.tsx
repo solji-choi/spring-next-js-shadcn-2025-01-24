@@ -6,7 +6,7 @@ import { useGlobalLoginMember } from "@/stores/auth/loginMember";
 
 import { Button } from "@/components/ui/button";
 
-import { Pencil, TableOfContents } from "lucide-react";
+import { NotebookTabs, Pencil, TableOfContents } from "lucide-react";
 
 import LoginButton from "./LoginButton";
 import Logo from "./Logo";
@@ -34,6 +34,13 @@ export default function WideHeaderContent({
         <Button variant="link" asChild>
           <Link href="/post/write">
             <Pencil /> 작성
+          </Link>
+        </Button>
+      )}
+      {isLogin && (
+        <Button variant="link" asChild>
+          <Link href="/post/mine">
+            <NotebookTabs /> 내글
           </Link>
         </Button>
       )}
