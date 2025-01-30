@@ -49,7 +49,7 @@ export default function NarrowHeaderContent({
         <DrawerContent>
           <DrawerHeader className="sr-only">
             <DrawerTitle>전체 메뉴</DrawerTitle>
-            <DrawerDescription></DrawerDescription>
+            <DrawerDescription>전체 메뉴</DrawerDescription>
           </DrawerHeader>
           <div className="max-h-[calc(100dvh-150px)] pb-2 overflow-y-auto px-2">
             <ul>
