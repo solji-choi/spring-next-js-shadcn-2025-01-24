@@ -4,19 +4,22 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import type { components } from "@/lib/backend/apiV1/schema";
+import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationLink, PaginationEllipsis, PaginationNext } from "@/components/ui/pagination";
 
-export default function ClientPage({
-  searchKeyword,
-  searchKeywordType,
-  pageSize,
-  itemPage,
-}: {
-  searchKeyword: string;
-  searchKeywordType: string;
-  page: number;
-  pageSize: number;
-  itemPage: components["schemas"]["PageDtoPostDto"];
-}) {
+export default function ClientPage(
+  {
+    searchKeyword,
+    searchKeywordType,
+    pageSize,
+    itemPage,
+  }: {
+    searchKeyword: string;
+    searchKeywordType: string;
+    page: number;
+    pageSize: number;
+    itemPage: components["schemas"]["PageDtoPostDto"];
+  }
+) {
   const router = useRouter();
 
   return (
@@ -33,7 +36,7 @@ export default function ClientPage({
           const pageSize = formData.get("pageSize") as string;
 
           router.push(
-            `?page=${page}&pageSize=${pageSize}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}`,
+            `?page=${page}&pageSize=${pageSize}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}`
           );
         }}
       >
@@ -70,6 +73,35 @@ export default function ClientPage({
 
       <hr />
 
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="?page=1" />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="?page=2">2</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="?page=3" isActive>
+              3
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="?page=4">4</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="?page=5">
+              <PaginationEllipsis />
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext href="?page=4" />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+
+      <hr />
+
       <div className="flex my-2 gap-2">
         {Array.from({ length: itemPage.totalPages }, (_, i) => i + 1).map(
           (pageNum) => (
@@ -82,7 +114,7 @@ export default function ClientPage({
             >
               {pageNum}
             </Link>
-          ),
+          )
         )}
       </div>
 
@@ -119,7 +151,7 @@ export default function ClientPage({
             >
               {pageNum}
             </Link>
-          ),
+          )
         )}
       </div>
     </div>
