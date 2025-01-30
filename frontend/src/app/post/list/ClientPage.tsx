@@ -4,23 +4,31 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import type { components } from "@/lib/backend/apiV1/schema";
-import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationLink, PaginationEllipsis, PaginationNext } from "@/components/ui/pagination";
 
-export default function ClientPage(
-  {
-    searchKeyword,
-    searchKeywordType,
-    pageSize,
-    itemPage,
-  }: {
-    searchKeyword: string;
-    searchKeywordType: string;
-    page: number;
-    pageSize: number;
-    itemPage: components["schemas"]["PageDtoPostDto"];
-  }
-) {
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+} from "@/components/ui/pagination";
+
+export default function ClientPage({
+  searchKeyword,
+  searchKeywordType,
+  pageSize,
+  itemPage,
+}: {
+  searchKeyword: string;
+  searchKeywordType: string;
+  page: number;
+  pageSize: number;
+  itemPage: components["schemas"]["PageDtoPostDto"];
+}) {
   const router = useRouter();
+
+  // armSize : 현재 중심 페이지 버튼의 좌측(혹은 우측)으로 나올 수 있는 페이지 버튼 수
+  const paginationArmSize = 1;
 
   return (
     <div className="container mx-auto px-4">
@@ -36,7 +44,7 @@ export default function ClientPage(
           const pageSize = formData.get("pageSize") as string;
 
           router.push(
-            `?page=${page}&pageSize=${pageSize}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}`
+            `?page=${page}&pageSize=${pageSize}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}`,
           );
         }}
       >
@@ -75,34 +83,41 @@ export default function ClientPage(
 
       <Pagination>
         <PaginationContent>
-        {Array.from({ length: itemPage.totalPages }, (_, i) => i + 1).map(
-          (pageNum) => (
-            <PaginationItem key={pageNum}>
-              <PaginationLink href={`?page=${pageNum}&pageSize=${pageSize}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}`} isActive={pageNum === itemPage.currentPageNumber}>{pageNum}</PaginationLink>
-            </PaginationItem>
-          )
-        )}
           <PaginationItem>
-            <PaginationPrevious href="?page=1" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="?page=2">2</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="?page=3" isActive>
-              3
+            <PaginationLink
+              href={`?page=1&pageSize=${pageSize}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}`}
+              isActive={1 === itemPage.currentPageNumber}
+            >
+              1
             </PaginationLink>
           </PaginationItem>
+          <PaginationEllipsis />
+          {Array.from({ length: itemPage.totalPages }, (_, i) => i + 1)
+            .filter(
+              (pageNum) =>
+                pageNum > 1 &&
+                itemPage.currentPageNumber - paginationArmSize <= pageNum &&
+                pageNum <= itemPage.currentPageNumber + paginationArmSize &&
+                pageNum < itemPage.totalPages,
+            )
+            .map((pageNum) => (
+              <PaginationItem key={pageNum}>
+                <PaginationLink
+                  href={`?page=${pageNum}&pageSize=${pageSize}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}`}
+                  isActive={pageNum === itemPage.currentPageNumber}
+                >
+                  {pageNum}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+          <PaginationEllipsis />
           <PaginationItem>
-            <PaginationLink href="?page=4">4</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="?page=5">
-              <PaginationEllipsis />
+            <PaginationLink
+              href={`?page=${itemPage.totalPages}&pageSize=${pageSize}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}`}
+              isActive={itemPage.totalPages === itemPage.currentPageNumber}
+            >
+              {itemPage.totalPages}
             </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="?page=4" />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
@@ -121,7 +136,7 @@ export default function ClientPage(
             >
               {pageNum}
             </Link>
-          )
+          ),
         )}
       </div>
 
@@ -158,7 +173,7 @@ export default function ClientPage(
             >
               {pageNum}
             </Link>
-          )
+          ),
         )}
       </div>
     </div>
