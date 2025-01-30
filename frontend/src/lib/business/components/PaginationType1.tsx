@@ -51,7 +51,7 @@ function usePagination({
   };
 }
 
-interface PaginationProps {
+export interface PaginationProps {
   className?: string;
   baseQueryString: string;
   totalPages: number;

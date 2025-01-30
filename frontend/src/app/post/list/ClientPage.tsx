@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import type { components } from "@/lib/backend/apiV1/schema";
-import PaginationType1 from "@/lib/business/components/PaginationType1";
+import PaginationType1Responsive from "@/lib/business/components/PaginationType1Responsive";
 
 export default function ClientPage({
   searchKeyword,
@@ -60,20 +60,11 @@ export default function ClientPage({
         <button type="submit">검색</button>
       </form>
 
-      <PaginationType1
-        className="my-2 sm:hidden"
+      <PaginationType1Responsive
+        className="my-2"
         baseQueryString={`pageSize=${pageSize}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}`}
         totalPages={itemPage.totalPages}
         currentPageNumber={itemPage.currentPageNumber}
-        paginationArmSize={1}
-      />
-
-      <PaginationType1
-        className="my-2 hidden sm:flex"
-        baseQueryString={`pageSize=${pageSize}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}`}
-        totalPages={itemPage.totalPages}
-        currentPageNumber={itemPage.currentPageNumber}
-        paginationArmSize={4}
       />
 
       <ul>
@@ -93,20 +84,11 @@ export default function ClientPage({
         ))}
       </ul>
 
-      <PaginationType1
-        className="my-2 sm:hidden"
+      <PaginationType1Responsive
+        className="my-2"
         baseQueryString={`pageSize=${pageSize}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}`}
         totalPages={itemPage.totalPages}
         currentPageNumber={itemPage.currentPageNumber}
-        paginationArmSize={1}
-      />
-
-      <PaginationType1
-        className="my-2 hidden sm:flex"
-        baseQueryString={`pageSize=${pageSize}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}`}
-        totalPages={itemPage.totalPages}
-        currentPageNumber={itemPage.currentPageNumber}
-        paginationArmSize={4}
       />
     </div>
   );
