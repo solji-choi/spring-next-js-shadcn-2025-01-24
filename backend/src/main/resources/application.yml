@@ -2,7 +2,7 @@ server:
   port: 8080
 spring:
   application:
-    name: next-js-auth-2025-01-17
+    name: next-js-shadcn-2025-01-24
   profiles:
     active: dev
     include: secret
