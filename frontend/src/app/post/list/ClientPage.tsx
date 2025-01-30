@@ -55,7 +55,7 @@ export default function ClientPage({
 
         <div className="flex items-center flex-wrap gap-2 mb-6">
           <div
-            className="relative w-full sm:max-w-sm"
+            className="relative w-full sm:w-auto"
             role="button"
             onClick={() => setOpen(true)}
           >
@@ -81,7 +81,7 @@ export default function ClientPage({
             </Button>
           </div>
 
-          <div className="flex-grow hidden sm:block"></div>
+          <div className="flex-grow"></div>
 
           {searchKeyword && (
             <div className="flex items-center gap-2 text-sm bg-muted px-3 py-1.5 rounded-md">
