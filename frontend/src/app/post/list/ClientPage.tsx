@@ -20,7 +20,7 @@ export default function ClientPage({
   const router = useRouter();
 
   return (
-    <div>
+    <div className="container mx-auto px-4">
       <h1 className="text-2xl font-bold">공개글 목록</h1>
       <form
         onSubmit={(e) => {
