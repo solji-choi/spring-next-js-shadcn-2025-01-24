@@ -14,6 +14,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { Separator } from "@/components/ui/separator";
 
 import {
   LogOut,
@@ -24,6 +25,7 @@ import {
   User,
 } from "lucide-react";
 
+import LoginButton from "./LoginButton";
 import Logo from "./Logo";
 import MeMenuButton from "./MeMenuButton";
 import ThemeToggleButton from "./ThemeToggleButton";
@@ -80,7 +82,7 @@ export default function NarrowHeaderContent({
                 </li>
               )}
               <li className="py-2">
-                <hr />
+                <Separator />
               </li>
               <li>
                 <DrawerClose asChild>
@@ -93,6 +95,19 @@ export default function NarrowHeaderContent({
                   </Button>
                 </DrawerClose>
               </li>
+              {!isLogin && (
+                <li>
+                  <DrawerClose asChild>
+                    <Button
+                      variant="link"
+                      className="w-full justify-start"
+                      asChild
+                    >
+                      <LoginButton text />
+                    </Button>
+                  </DrawerClose>
+                </li>
+              )}
               {isLogin && (
                 <li>
                   <DrawerClose asChild>
