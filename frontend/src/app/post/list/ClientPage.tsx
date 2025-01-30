@@ -75,6 +75,13 @@ export default function ClientPage(
 
       <Pagination>
         <PaginationContent>
+        {Array.from({ length: itemPage.totalPages }, (_, i) => i + 1).map(
+          (pageNum) => (
+            <PaginationItem key={pageNum}>
+              <PaginationLink href={`?page=${pageNum}&pageSize=${pageSize}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}`} isActive={pageNum === itemPage.currentPageNumber}>{pageNum}</PaginationLink>
+            </PaginationItem>
+          )
+        )}
           <PaginationItem>
             <PaginationPrevious href="?page=1" />
           </PaginationItem>

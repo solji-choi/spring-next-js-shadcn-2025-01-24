@@ -3,6 +3,5 @@
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.organizeImports": "never"
-  },
-  "prettier.disableLanguages": ["javascript", "typescript"]
+  }
 }
