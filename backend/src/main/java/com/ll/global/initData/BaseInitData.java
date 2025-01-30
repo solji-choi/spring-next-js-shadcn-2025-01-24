@@ -5,6 +5,7 @@ import com.ll.domain.member.member.service.MemberService;
 import com.ll.domain.post.post.entity.Post;
 import com.ll.domain.post.post.service.PostService;
 import com.ll.global.app.AppConfig;
+import com.ll.global.app.CustomConfigProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
@@ -18,6 +19,7 @@ import java.util.stream.IntStream;
 @Configuration
 @RequiredArgsConstructor
 public class BaseInitData {
+    private final CustomConfigProperties customConfigProperties;
     private final MemberService memberService;
     private final PostService postService;
     @Autowired
@@ -37,28 +39,39 @@ public class BaseInitData {
         if (memberService.count() > 0) return;
 
         Member memberSystem = memberService.join("system", "1234", "시스템", "");
-        if(AppConfig.isNotProd()) memberSystem.setApiKey("system");
+        if (AppConfig.isNotProd()) memberSystem.setApiKey("system");
 
         Member memberAdmin = memberService.join("admin", "1234", "관리자", "");
-        if(AppConfig.isNotProd()) memberAdmin.setApiKey("admin");
+        if (AppConfig.isNotProd()) memberAdmin.setApiKey("admin");
 
         Member memberUser1 = memberService.join("user1", "1234", "유저1", "");
-        if(AppConfig.isNotProd()) memberUser1.setApiKey("user1");
+        if (AppConfig.isNotProd()) memberUser1.setApiKey("user1");
 
         Member memberUser2 = memberService.join("user2", "1234", "유저2", "");
-        if(AppConfig.isNotProd()) memberUser2.setApiKey("user2");
+        if (AppConfig.isNotProd()) memberUser2.setApiKey("user2");
 
         Member memberUser3 = memberService.join("user3", "1234", "유저3", "");
-        if(AppConfig.isNotProd()) memberUser3.setApiKey("user3");
+        if (AppConfig.isNotProd()) memberUser3.setApiKey("user3");
 
         Member memberUser4 = memberService.join("user4", "1234", "유저4", "");
-        if(AppConfig.isNotProd()) memberUser4.setApiKey("user4");
+        if (AppConfig.isNotProd()) memberUser4.setApiKey("user4");
 
         Member memberUser5 = memberService.join("user5", "1234", "유저5", "");
-        if(AppConfig.isNotProd()) memberUser5.setApiKey("user5");
+        if (AppConfig.isNotProd()) memberUser5.setApiKey("user5");
 
         Member memberUser6 = memberService.join("user6", "1234", "유저6", "");
-        if(AppConfig.isNotProd()) memberUser5.setApiKey("user6");
+        if (AppConfig.isNotProd()) memberUser6.setApiKey("user6");
+
+        for (var notProdMember : customConfigProperties.getNotProdMembers()) {
+            var member = memberService.join(
+                    notProdMember.username(),
+                    "",
+                    notProdMember.nickname(),
+                    notProdMember.profileImgUrl()
+            );
+
+            if (AppConfig.isNotProd()) member.setApiKey(notProdMember.apiKey());
+        }
     }
 
     @Transactional
@@ -89,7 +102,7 @@ public class BaseInitData {
                 true,
                 true
         );
-        post2.addComment(memberUser4, "저요! 저 배구 잘합니다.");
+        post2.addComment(memberUser4, "저요!, 저 배구 잘합니다.");
 
         Post post3 = postService.write(
                 memberUser2,
@@ -98,6 +111,7 @@ public class BaseInitData {
                 true,
                 true
         );
+
         Post post4 = postService.write(
                 memberUser3,
                 "발야구 하실 분?",
@@ -105,6 +119,7 @@ public class BaseInitData {
                 true,
                 true
         );
+
         Post post5 = postService.write(
                 memberUser4,
                 "피구 하실 분?",
@@ -115,7 +130,7 @@ public class BaseInitData {
 
         Post post6 = postService.write(
                 memberUser4,
-                "발야구 하실 분?",
+                "발야구를 밤에 하실 분?",
                 "22시 까지 18명을 모아야 합니다.",
                 false,
                 false
@@ -123,16 +138,16 @@ public class BaseInitData {
 
         Post post7 = postService.write(
                 memberUser4,
-                "발야구 하실 분?",
-                "22시 까지 18명을 모아야 합니다.",
+                "발야구를 새벽 1시에 하실 분?",
+                "새벽 1시 까지 17명을 모아야 합니다.",
                 true,
                 false
         );
 
         Post post8 = postService.write(
                 memberUser4,
-                "발야구 하실 분?",
-                "22시 까지 18명을 모아야 합니다.",
+                "발야구를 새벽 3시에 하실 분?",
+                "새벽 3시 까지 19명을 모아야 합니다.",
                 false,
                 true
         );
