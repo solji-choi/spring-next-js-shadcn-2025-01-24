@@ -51,9 +51,11 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         switch(kwType) {
             case kwType.title -> builder.and(post.title.containsIgnoreCase(kw));
             case kwType.content -> builder.and(post.content.containsIgnoreCase(kw));
+            case kwType.author -> builder.and(post.author.nickname.containsIgnoreCase(kw));
             default -> builder.and(
                     post.title.containsIgnoreCase(kw)
                             .or(post.content.containsIgnoreCase(kw))
+                            .or(post.author.nickname.containsIgnoreCase(kw))
             );
         }
     }
