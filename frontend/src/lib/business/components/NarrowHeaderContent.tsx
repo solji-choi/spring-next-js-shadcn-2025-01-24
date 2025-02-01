@@ -24,6 +24,7 @@ import {
   Pencil,
   TableOfContents,
   User,
+  UserRoundSearch,
 } from "lucide-react";
 
 import LoginButton from "./LoginButton";
@@ -36,8 +37,14 @@ export default function NarrowHeaderContent({
 }: {
   className?: string;
 }) {
-  const { isLogin, isAdmin, loginMember, logoutAndHome } =
-    useGlobalLoginMember();
+  const {
+    isLogin,
+    isAdmin,
+    loginMember,
+    logoutAndHome,
+    isAdminPage,
+    isUserPage,
+  } = useGlobalLoginMember();
 
   return (
     <div className={`${className} py-1`}>
@@ -54,49 +61,72 @@ export default function NarrowHeaderContent({
           </DrawerHeader>
           <div className="max-h-[calc(100dvh-150px)] pb-2 overflow-y-auto px-2">
             <ul>
-              <li>
-                <DrawerClose asChild>
-                  <Button
-                    variant="link"
-                    className="w-full justify-start"
-                    asChild
-                  >
-                    <Link href="/post/list">
-                      <TableOfContents /> 글
-                    </Link>
-                  </Button>
-                </DrawerClose>
-              </li>
-              {isLogin && (
-                <li>
-                  <DrawerClose asChild>
-                    <Button
-                      variant="link"
-                      className="w-full justify-start"
-                      asChild
-                    >
-                      <Link href="/post/write">
-                        <Pencil /> 작성
-                      </Link>
-                    </Button>
-                  </DrawerClose>
-                </li>
+              {isUserPage && (
+                <>
+                  <li>
+                    <DrawerClose asChild>
+                      <Button
+                        variant="link"
+                        className="w-full justify-start"
+                        asChild
+                      >
+                        <Link href="/post/list">
+                          <TableOfContents /> 글
+                        </Link>
+                      </Button>
+                    </DrawerClose>
+                  </li>
+                  {isLogin && (
+                    <li>
+                      <DrawerClose asChild>
+                        <Button
+                          variant="link"
+                          className="w-full justify-start"
+                          asChild
+                        >
+                          <Link href="/post/write">
+                            <Pencil /> 작성
+                          </Link>
+                        </Button>
+                      </DrawerClose>
+                    </li>
+                  )}
+                  {isLogin && (
+                    <li>
+                      <DrawerClose asChild>
+                        <Button
+                          variant="link"
+                          className="w-full justify-start"
+                          asChild
+                        >
+                          <Link href="/post/mine">
+                            <NotebookTabs /> 내글
+                          </Link>
+                        </Button>
+                      </DrawerClose>
+                    </li>
+                  )}
+                </>
               )}
-              {isLogin && (
-                <li>
-                  <DrawerClose asChild>
-                    <Button
-                      variant="link"
-                      className="w-full justify-start"
-                      asChild
-                    >
-                      <Link href="/post/mine">
-                        <NotebookTabs /> 내글
-                      </Link>
-                    </Button>
-                  </DrawerClose>
-                </li>
+
+              {isAdminPage && (
+                <>
+                  <li>
+                    <DrawerClose asChild>
+                      <Button
+                        variant="link"
+                        className="w-full justify-start"
+                        asChild
+                      >
+                        <Link href="/adm/member/list">
+                          <UserRoundSearch /> 회원관리
+                        </Link>
+                      </Button>
+                    </DrawerClose>
+                  </li>
+                </>
               )}
+
               <li className="py-2">
                 <Separator />
               </li>
@@ -172,9 +202,24 @@ export default function NarrowHeaderContent({
         </DrawerContent>
       </Drawer>
 
-      <Button variant="link" asChild>
-        <Logo />
-      </Button>
+      {isUserPage && (
+        <>
+          <Button variant="link" asChild>
+            <Logo />
+          </Button>
+        </>
+      )}
+
+      {isAdminPage && (
+        <>
+          <Button variant="link" asChild>
+            <Link href="/adm">
+              <MonitorCog />
+            </Link>
+          </Button>
+        </>
+      )}
+
       <div className="flex-grow"></div>
       {isLogin && <MeMenuButton />}
       <ThemeToggleButton />
