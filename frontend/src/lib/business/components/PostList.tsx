@@ -36,7 +36,7 @@ import PaginationType1Responsive from "./PaginationType1Responsive";
 
 interface PostListProps {
   searchKeyword: string;
-  searchKeywordType: string;
+  searchKeywordType: "all" | "title" | "content" | "author";
   pageSize: number;
   itemPage: components["schemas"]["PageDtoPostDto"];
 }
@@ -253,7 +253,7 @@ export default function PostList({
                           alt={item.authorName}
                           width={40}
                           height={40}
-                          className="rounded-full ring-2 ring-primary/10"
+                          className="rounded-full ring-2 ring-primary/10 object-cover w-10 h-10"
                         />
                       </div>
                       <div className="flex-1 min-w-0">

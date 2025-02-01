@@ -39,7 +39,7 @@ export default function ClientPage({
   itemPage,
 }: {
   searchKeyword: string;
-  searchKeywordType: string;
+  searchKeywordType: "all" | "username" | "nickname";
   page: number;
   pageSize: number;
   itemPage: components["schemas"]["PageDtoMemberWithUsernameDto"];
@@ -66,6 +66,7 @@ export default function ClientPage({
                 searchKeyword
                   ? `${
                       {
+                        all: "전체",
                         username: "아이디",
                         nickname: "별명",
                       }[searchKeywordType]
@@ -90,6 +91,7 @@ export default function ClientPage({
               <span className="text-muted-foreground">
                 {
                   {
+                    all: "전체",
                     username: "전체",
                     nickname: "별명",
                   }[searchKeywordType]
@@ -188,6 +190,7 @@ export default function ClientPage({
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
+                      <SelectItem value="all">전체</SelectItem>
                       <SelectItem value="username">아이디</SelectItem>
                       <SelectItem value="nickname">별명</SelectItem>
                     </SelectGroup>
@@ -243,7 +246,7 @@ export default function ClientPage({
                           alt={item.nickname}
                           width={40}
                           height={40}
-                          className="rounded-full ring-2 ring-primary/10"
+                          className="rounded-full ring-2 ring-primary/10 w-10 h-10 object-cover"
                         />
                       </div>
                       <div className="flex-1 min-w-0">

@@ -8,7 +8,7 @@ export default async function Page({
   searchParams,
 }: {
   searchParams: {
-    searchKeywordType?: "title" | "content";
+    searchKeywordType?: "all" | "title" | "content" | "author";
     searchKeyword?: string;
     pageSize?: number;
     page?: number;
